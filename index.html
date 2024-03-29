@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Self Driving Car - Delta - TS.js</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div id="panel">
+      <p><b>Max Fitness:</b> <span id="panelMaxFitness"></span></p>
+      <p><b>Avg Fitness:</b> <span id="panelAvgFitness"></span></p>
+      <p><b>Generation:</b> <span id="panelGeneration"></span></p>
+      <p><b>Countdown NG:</b> <span id="panelCountdown"></span></p>
+      <p><b>Mutated:</b> <span id="panelMutated"></span></p>
+      
+    </div>
+    <canvas id="carCanvas"></canvas>
+
+    <div id="paused"></div>
+
+    <script src="libs/utils.js"></script>
+    <script src="libs/classes/road.js"></script>
+    <script src="libs/classes/controls.js"></script>
+    <script src="libs/classes/sensor.js"></script>
+    <script src="libs/classes/network.js"></script>
+    <script src="libs/classes/car.js"></script>
+    <script src="libs/classes/GA.js"></script>
+    <script src="libs/main.js"></script>
+    <script src="index.js" defer></script>
+  </body>
+</html>
