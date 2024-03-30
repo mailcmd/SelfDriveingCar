@@ -15,6 +15,7 @@ function animate(time) {
 
     const carMaxScore = Math.max(...cars.map( c => c.score ));
     bestCar = cars.find( car => car.score ==  carMaxScore) ?? bestCar;
+    panelMaxOC.innerHTML = bestCar.overpassedCars;
     if (bestCar.overpassedCars >= traffic.length) {
         paused = true;
         saveModel();
