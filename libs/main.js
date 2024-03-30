@@ -13,12 +13,12 @@ function animate(time) {
     
     carCanvas.height = window.innerHeight;
 
-    //const carMaxY = Math.min(...cars.map( c => c.y ));
-    //bestCar = cars.find( car => car.y ==  carMaxY);
-    // const carMaxY = Math.max(...cars.map( c => c.score ));
-    // bestCar = cars.find( car => !car.damaged && car.score ==  carMaxY) ?? bestCar;
     const carMaxScore = Math.max(...cars.map( c => c.score ));
     bestCar = cars.find( car => car.score ==  carMaxScore) ?? bestCar;
+    if (bestCar.overpassedCars >= traffic.length) {
+        paused = true;
+        saveModel();
+    }
     panelAvgFitness.innerHTML = ~~(bestCar.score);
     if (resetTimeOut == -1 && bestCar.damaged ) {
         resetTimeOut = setTimeout(()=> {
@@ -72,6 +72,7 @@ function generateCars(N, model, controlType = 'AI') {
                 model: model
             })
         );
+        cars[cars.length-1].brain.mutate(mutateRatio); 
     }
     return cars;
 }
@@ -81,7 +82,7 @@ function generateTraffic(N) {
     for (let i = 0; i < N; i++) {
         traffic.push( 
             new Car({            
-                x: road.getLaneCenter( parseInt(Math.random()*3) ) + (Math.random()*40-20), 
+                x: road.getLaneCenter( parseInt(Math.random()*3) ), // + (Math.random()*40-20), 
                 y: -parseInt(Math.random() * 2200),
                 width: 30, 
                 height: 50, 

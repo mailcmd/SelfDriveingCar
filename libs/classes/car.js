@@ -98,7 +98,7 @@ class Car {
 
     calculateScore(traffic) {
         //if (!this.damaged) 
-        this.score = -this.y * this.speed;
+        this.score = -this.y;// * this.speed;
         //return this.score;
         let overpassedCars = 0;
         for (let i = 0; i < traffic.length; i++) {
@@ -164,7 +164,8 @@ class Car {
         this.controls.forward = 0;
         this.controls.reverse = 0; 
         this.controls.left = 0; 
-        this.controls.right = 0;         
+        this.controls.right = 0;
+        this.idiotCounter = 0;
     }
 
 

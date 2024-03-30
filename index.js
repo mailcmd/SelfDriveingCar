@@ -3,7 +3,7 @@ let generation = 1;
 
 // config constants
 const carsCount = 100; 
-const trafficCount = 15;
+const trafficCount = 20;
 const yLimit = -5000;
 let mutateRatio = 0.1;
 const roundLength = 1800;
