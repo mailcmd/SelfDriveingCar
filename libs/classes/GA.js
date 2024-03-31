@@ -24,6 +24,7 @@ function createNextGeneration() {
 		car.brain = new NeuralNetwork(car.brain.neuronCounts);
 		car.brain.load(brains[i % brainsCount].getModel());
 		// if (Math.random() <= mutateRatio) 
+		if (i > 0) 
 			car.brain.mutate(mutateRatio); 
 	});
 }

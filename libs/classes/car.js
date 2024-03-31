@@ -36,7 +36,7 @@ class Car {
 
             const config = [
                 this.sensorsCount + 1,
-                60,
+                3*(this.sensorsCount + 1),
                 4
             ];
 

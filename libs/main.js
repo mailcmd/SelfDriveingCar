@@ -69,11 +69,12 @@ function generateCars(N, model, controlType = 'AI') {
                 width: 30,
                 height: 50,
                 controlType: controlType,
-                sensorsCount: 18,
+                sensorsCount: 15,
                 model: model
             })
         );
-        cars[cars.length-1].brain.mutate(mutateRatio); 
+        // Muto todos menos el primero
+        if (i > 0) cars[cars.length-1].brain.mutate(mutateRatio); 
     }
     return cars;
 }
@@ -104,57 +105,14 @@ function resetTraffic(traffic) {
     return traffic;
 }
 
-function addTrainingData(car) {
-    const inputs = car.getInputs();
-    trainData.push({
-        input: inputs,
-        output: [
-            car.controls.left,
-            car.controls.forward,
-            car.controls.right,
-            car.controls.reverse
-        ]
-    });
+function saveModel(name = 'model') {
+    localStorage.setItem(name, JSON.stringify(bestCar.brain.getModel()));
 }
-
-function saveTrainingDataBatch() {
-    const currentTrainData = JSON.parse(localStorage.getItem('trainData') || '[]');
-    const newTrainData = [ ...currentTrainData, ...trainData ];
-    localStorage.setItem('trainData', JSON.stringify(newTrainData));
-    trainData = [];
-    console.log('Train data saved! Data count: ' + newTrainData.length);
+function removeModel(name = 'model') {
+    localStorage.removeItem(name);
 }
-
-function restoreTrainingData() {
-    return JSON.parse(localStorage.getItem('trainData') || '[]');
-}
-
-function discardTrainingData() {
-    localStorage.removeItem('trainData');
-}
-
-function discardLocalStorageModels() {
-    Object.keys(localStorage).forEach( k => k.slice(0, ('tensorflowjs_models/'+tfModelName).length) == 'tensorflowjs_models/'+tfModelName && (localStorage.removeItem(k)));
-}
-
-function getTrainingData() {
-    let data = restoreTrainingData(), inputs = data.map( d => d.input), outputs = data.map( d => d.output);
-    return { inputs, outputs };
-}
-
-function train(opts = {}) {
-    paused = true;
-    bestCar.brain.train( { ...getTrainingData(), ...opts } );
-}
-
-function saveModel() {
-    localStorage.setItem('model', JSON.stringify(bestCar.brain.getModel()));
-}
-function removeModel() {
-    localStorage.removeItem('model');
-}
-function restoreModel() {
-    return JSON.parse(localStorage.getItem('model'));
+function restoreModel(name = 'model') {
+    return JSON.parse(localStorage.getItem(name));
 }
 
 // wrappers
@@ -162,3 +120,46 @@ let log = console.log;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+// function addTrainingData(car) {
+//     const inputs = car.getInputs();
+//     trainData.push({
+//         input: inputs,
+//         output: [
+//             car.controls.left,
+//             car.controls.forward,
+//             car.controls.right,
+//             car.controls.reverse
+//         ]
+//     });
+// }
+
+// function saveTrainingDataBatch() {
+//     const currentTrainData = JSON.parse(localStorage.getItem('trainData') || '[]');
+//     const newTrainData = [ ...currentTrainData, ...trainData ];
+//     localStorage.setItem('trainData', JSON.stringify(newTrainData));
+//     trainData = [];
+//     console.log('Train data saved! Data count: ' + newTrainData.length);
+// }
+
+// function restoreTrainingData() {
+//     return JSON.parse(localStorage.getItem('trainData') || '[]');
+// }
+
+// function discardTrainingData() {
+//     localStorage.removeItem('trainData');
+// }
+
+// function discardLocalStorageModels() {
+//     Object.keys(localStorage).forEach( k => k.slice(0, ('tensorflowjs_models/'+tfModelName).length) == 'tensorflowjs_models/'+tfModelName && (localStorage.removeItem(k)));
+// }
+
+// function getTrainingData() {
+//     let data = restoreTrainingData(), inputs = data.map( d => d.input), outputs = data.map( d => d.output);
+//     return { inputs, outputs };
+// }
+
+// function train(opts = {}) {
+//     paused = true;
+//     bestCar.brain.train( { ...getTrainingData(), ...opts } );
+// }
